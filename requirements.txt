@@ -1,0 +1,5 @@
+# Django base stuff
+Django==4.1.6
+
+# DRF
+djangorestframework==3.14.0
