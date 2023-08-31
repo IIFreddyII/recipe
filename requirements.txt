@@ -6,3 +6,6 @@ djangorestframework==3.14.0
 
 # DB
 psycopg2==2.9.5
+
+# Format
+brunette>=0.2.7

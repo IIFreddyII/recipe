@@ -1,6 +1,9 @@
 test:
 	docker-compose -f ../docker-compose.yml run --rm app sh -c "python manage.py test"
 
+wait_for_db:
+	docker-compose -f ../docker-compose.yml run --rm app sh -c "python manage.py wait_for_db"
+
 user:
 	docker-compose -f ../docker-compose.yml run --rm app sh -c "python manage.py createsuperuser"
 
@@ -12,6 +15,9 @@ migrate:
 
 up:
 	docker-compose -f ../docker-compose.yml up
+
+down:
+	docker-compose -f ../docker-compose.yml down
 
 build:
 	docker-compose -f ../docker-compose.yml build
