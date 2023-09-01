@@ -1,0 +1,20 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="DuplicatedCode" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="PyProtectedMemberInspection" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="INFORMATION" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="expenses.mixins.AdminExpenseMixin.request" />
+          <option value="expenses.mixins.AdminExpenseMixin.serializer_class" />
+          <option value="expenses.mixins.AdminExpenseMixin.queryset" />
+          <option value="jobs.mixins.AdminJobMixin.request" />
+          <option value="catalogues.mixins.AdminCatalogueMixin.request" />
+          <option value="catalogues.mixins.AdminCatalogueMixin.serializer_class" />
+          <option value="catalogues.mixins.AdminCatalogueMixin.queryset" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
