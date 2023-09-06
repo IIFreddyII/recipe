@@ -49,4 +49,9 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
-admin.site.register(models.Recipe)
+
+
+@admin.register(models.Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = ["title", "user", "time_minutes", "price", "created_at", "is_deleted"]
+    list_filter = ["user", "created_at", "is_deleted"]
