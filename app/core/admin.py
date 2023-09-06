@@ -55,3 +55,10 @@ admin.site.register(models.User, UserAdmin)
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ["title", "user", "time_minutes", "price", "created_at", "is_deleted"]
     list_filter = ["user", "created_at", "is_deleted"]
+
+
+@admin.register(models.Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ["name", "user", "created_at", "is_deleted"]
+    list_filter = ["user", "created_at", "is_deleted"]
+
