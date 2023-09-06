@@ -8,6 +8,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+from base.models import BaseModel
 
 
 class UserManager(BaseUserManager):
@@ -46,7 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
 
-class Recipe(models.Model):
+class Recipe(BaseModel):
     """Recipe object."""
 
     user = models.ForeignKey(
