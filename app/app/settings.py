@@ -130,4 +130,6 @@ AUTH_USER_MODEL = "core.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "base.pagination.AppPagination",
+    "MAX_PAGE_SIZE": 50,
 }
