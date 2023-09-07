@@ -18,12 +18,18 @@ class TagSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for recipes."""
 
-    tags = TagSerializer(many=True, required=False)
+    tags = serializers.SerializerMethodField()
 
     class Meta:
         model = Recipe
         fields = ["id", "title", "time_minutes", "price", "link", "tags"]
         read_only_fields = ["id"]
+
+    @staticmethod
+    def get_tags(instance):
+        queryset = Tag.objects.filter(is_deleted=False, recipe=instance)
+        serializer = TagSerializer(instance=queryset, many=True, read_only=True)
+        return serializer.data
 
     def _get_or_create_tags(self, tags, recipe):
         """Handle getting or creating tags as needed."""
@@ -47,7 +53,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """Update recipe."""
-        
+
         tags = validated_data.pop('tags', None)
         if tags is not None:
             instance.tags.clear()
