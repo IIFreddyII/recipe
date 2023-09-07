@@ -27,29 +27,31 @@ class TagSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for recipes."""
 
-    tags = serializers.SerializerMethodField()
-    ingredients = serializers.SerializerMethodField()
+    tags = TagSerializer(many=True, required=False)
+    ingredients = IngredientSerializer(many=True, required=False)
 
     class Meta:
         model = Recipe
-        fields = ["id", "title", "time_minutes", "price", "link", "tags", "ingredients"]
+        fields = [
+            "id",
+            "title",
+            "time_minutes",
+            "price",
+            "link",
+            "tags",
+            "ingredients",
+        ]
         read_only_fields = ["id"]
 
-    @staticmethod
-    def get_tags(instance):
-        queryset = Tag.objects.filter(is_deleted=False, recipe=instance)
-        serializer = TagSerializer(instance=queryset, many=True, read_only=True)
-        return serializer.data
 
-    @staticmethod
-    def get_ingredients(instance):
-        queryset = Ingredient.objects.filter(is_deleted=False, recipe=instance)
-        serializer = IngredientSerializer(instance=queryset, many=True, read_only=True)
-        return serializer.data
+class RecipeDetailSerializer(RecipeSerializer):
+    """Serializer for recipe detail view."""
+
+    class Meta(RecipeSerializer.Meta):
+        fields = RecipeSerializer.Meta.fields + ["description"]
 
     def _get_or_create_tags(self, tags, recipe):
         """Handle getting or creating tags as needed."""
-
         auth_user = self.context["request"].user
         for tag in tags:
             tag_obj, created = Tag.objects.get_or_create(
@@ -70,7 +72,6 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create a recipe."""
-
         tags = validated_data.pop("tags", [])
         ingredients = validated_data.pop("ingredients", [])
         recipe = Recipe.objects.create(**validated_data)
@@ -81,14 +82,11 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """Update recipe."""
-
         tags = validated_data.pop("tags", None)
         ingredients = validated_data.pop("ingredients", None)
-
         if tags is not None:
             instance.tags.clear()
             self._get_or_create_tags(tags, instance)
-
         if ingredients is not None:
             instance.ingredients.clear()
             self._get_or_create_ingredients(ingredients, instance)
@@ -98,10 +96,3 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
-
-
-class RecipeDetailSerializer(RecipeSerializer):
-    """Serializer for recipe detail view."""
-
-    class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ["description"]

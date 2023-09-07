@@ -1,12 +1,18 @@
 """
 Views for the recipe APIs
 """
-
-from rest_framework import viewsets, mixins
+from rest_framework import (
+    viewsets,
+    mixins,
+)
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Recipe, Tag
+from core.models import (
+    Recipe,
+    Tag,
+    Ingredient,
+)
 from recipe import serializers
 
 
@@ -20,7 +26,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Retrieve recipes for authenticated user."""
-        return self.queryset.filter(user=self.request.user, is_deleted=False).order_by("-id")
+        return self.queryset.filter(user=self.request.user).order_by("-id")
 
     def get_serializer_class(self):
         """Return the serializer class for request."""
@@ -30,7 +36,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return self.serializer_class
 
     def perform_create(self, serializer):
-        """Create a new recipe"""
+        """Create a new recipe."""
         serializer.save(user=self.request.user)
 
 
@@ -44,7 +50,7 @@ class BaseRecipeAttrViewSet(
 
     def get_queryset(self):
         """Filter queryset to authenticated user."""
-        return self.queryset.filter(user=self.request.user, is_deleted=False).order_by("created_at")
+        return self.queryset.filter(user=self.request.user).order_by("-name")
 
 
 class TagViewSet(BaseRecipeAttrViewSet):
