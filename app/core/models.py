@@ -79,7 +79,7 @@ class Tag(BaseModel):
         return self.name
 
 
-class Ingredient(models.Model):
+class Ingredient(BaseModel):
     """Ingredient for recipes."""
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
