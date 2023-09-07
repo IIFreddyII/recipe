@@ -61,3 +61,9 @@ class RecipeAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ["name", "user", "created_at", "is_deleted"]
     list_filter = ["user", "created_at", "is_deleted"]
+
+
+@admin.register(models.Ingredient)
+class IngredientAdmin(admin.ModelAdmin):
+    list_display = ["name", "user", "created_at", "is_deleted"]
+    list_filter = ["user", "created_at", "is_deleted"]
