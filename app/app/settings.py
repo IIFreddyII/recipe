@@ -137,3 +137,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "base.pagination.AppPagination",
     "MAX_PAGE_SIZE": 50,
 }
+
+SPECTACULAR_SETTINGS = {
+    'COMPONENT_SPLIT_REQUEST': True,
+}
