@@ -98,9 +98,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
     list=extend_schema(
         parameters=[
             OpenApiParameter(
-                'assigned_only',
-                OpenApiTypes.INT, enum=[0, 1],
-                description='Filter by items assigned to recipes.',
+                "assigned_only",
+                OpenApiTypes.INT,
+                enum=[0, 1],
+                description="Filter by items assigned to recipes.",
             ),
         ]
     )
@@ -115,16 +116,12 @@ class BaseRecipeAttrViewSet(
 
     def get_queryset(self):
         """Filter queryset to authenticated user."""
-        assigned_only = bool(
-            int(self.request.query_params.get('assigned_only', 0))
-        )
+        assigned_only = bool(int(self.request.query_params.get("assigned_only", 0)))
         queryset = self.queryset
         if assigned_only:
             queryset = queryset.filter(recipe__isnull=False)
 
-        return queryset.filter(
-            user=self.request.user
-        ).order_by('-name').distinct()
+        return queryset.filter(user=self.request.user).order_by("-name").distinct()
 
 
 class TagViewSet(BaseRecipeAttrViewSet):
